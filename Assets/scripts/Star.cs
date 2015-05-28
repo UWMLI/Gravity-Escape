@@ -33,7 +33,7 @@ public class Star : MonoBehaviour {
 			//m times v, used to meaure impulse
 			Vector2 mv = rocketRigidbody.mass * rocketRigidbody.velocity;
 			float impulseMagnitude = Mathf.Abs(Vector2.Dot(mv, contactNormal.normalized));
-			Debug.Log(impulseMagnitude);
+			//Debug.Log(impulseMagnitude);
 			if(impulseMagnitude > maxImpulse){
 				Debug.Log("crashed!");
 				collision.gameObject.GetComponent<Rocket>().Crash();

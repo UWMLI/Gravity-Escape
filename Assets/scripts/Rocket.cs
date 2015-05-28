@@ -10,6 +10,7 @@ public class Rocket : MonoBehaviour {
 	public bool thrusting;
 	public Vector2 currentThrust;
 	public Vector2 combinedGravitation;
+	public float steerSpeed;
 	public int state;
 	public enum State{
 		preLaunch,
@@ -23,6 +24,9 @@ public class Rocket : MonoBehaviour {
 		GameControl.rocket = this;
 		if(thrustMagnitude <= 0f){
 			thrustMagnitude = 10f;
+		}
+		if(steerSpeed <= 0f){
+			steerSpeed = 5.0f;
 		}
 		initialPosition = transform.position;
 		ghostTrail = GetComponent<GhostTrail>();

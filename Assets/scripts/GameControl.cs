@@ -13,6 +13,7 @@ public class GameControl : MonoBehaviour {
 	public float maxOutOfViewportTime;
 	public float outOfViewportTime;
 	public float crashTime;
+
 	void Awake(){
 		maxOutOfViewportTime = 3f;
 		self = this;
@@ -74,6 +75,26 @@ public class GameControl : MonoBehaviour {
 			rocket.thrusting = false;
 		}
 	}
+	void MoveCameraWithRocket(){
+		Vector3 newCameraPosition = rocket.transform.position;
+		newCameraPosition.y = mainCamera.transform.position.y;
+		newCameraPosition.z = -10f;
+		mainCamera.transform.position = newCameraPosition;
+	}
+	void Steer(){
+		//right: clockwise
+		//left: counterclockwise
+		Vector2 vel = rocket.GetComponent<Rigidbody2D>().velocity;
+		float angle = Mathf.Rad2Deg * Mathf.Atan2(vel.y,vel.x);
+		//float angle = Mathf.Rad2Deg * Mathf.Atan2(combinedForceDir.y,combinedForceDir.x);
+		//rocket.transform.eulerAngles = new Vector3(0,0, angle);
+	
+		float steer = Input.GetAxis("Horizontal");
+		float rotation = -steer * /*Mathf.Rad2Deg **/ 10f * Time.deltaTime;
+		rocket.transform.Rotate(0,0,rotation);
+
+		//Debug.Log("steer rotation: " + rotation);
+	}
 	// Update is called once per frame
 	void Update () {
 		//Count 5
@@ -94,7 +115,7 @@ public class GameControl : MonoBehaviour {
 			|| rocket.state == (int)Rocket.State.thrusting){
 			//if rocket is out of sight for more than 3 seconds
 			//game over
-			
+			/*
 			RocketInViewportTest();
 
 			if(outOfViewportTime >= maxOutOfViewportTime){
@@ -102,6 +123,12 @@ public class GameControl : MonoBehaviour {
 			}else{
 				HandleThrusting();
 			}
+			//update: camera moves with rocket
+			//rocket is always at the center of the screen
+			*/
+			Steer();
+			HandleThrusting();
+			MoveCameraWithRocket();
 			
 		}
 		else if(rocket.state == (int)Rocket.State.crashing){
