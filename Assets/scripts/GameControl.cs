@@ -103,7 +103,8 @@ public class GameControl : MonoBehaviour {
 				rocket.ghostTrail.enabled = true;
 				//start physics
 				physics.physicsStarted = true;
-				rocket.GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+				//rocket.GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
+				rocket.ApplyInitialVelocity();
 			}
 		}
 		else if(rocket.state == (int)Rocket.State.flying

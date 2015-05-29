@@ -6,11 +6,14 @@ public class Rocket : MonoBehaviour {
 	public float mass;
 	public float thrustMagnitude; //assign in inspector
 	public float fuel;
+	public float initialVelocityAngle; //assign in inspector
+	public float initialVelocityMagnitude; // >= 0
+
 	public Vector2 flyingDirection;
 	public bool thrusting;
 	public Vector2 currentThrust;
 	public Vector2 combinedGravitation;
-	public float steerSpeed;
+
 	public int state;
 	public enum State{
 		preLaunch,
@@ -24,9 +27,6 @@ public class Rocket : MonoBehaviour {
 		GameControl.rocket = this;
 		if(thrustMagnitude <= 0f){
 			thrustMagnitude = 10f;
-		}
-		if(steerSpeed <= 0f){
-			steerSpeed = 5.0f;
 		}
 		initialPosition = transform.position;
 		ghostTrail = GetComponent<GhostTrail>();
@@ -61,6 +61,11 @@ public class Rocket : MonoBehaviour {
 			thrusting = false;
 			currentThrust = Vector2.zero;
 		}
+	}
+	public void ApplyInitialVelocity(){
+		if(initialVelocityMagnitude == 0)return;
+		transform.Rotate(0,0,initialVelocityAngle);
+		GetComponent<Rigidbody2D>().velocity = transform.up.normalized * initialVelocityMagnitude;
 	}
 	// Use this for initialization
 	void Start () {
