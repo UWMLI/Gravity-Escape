@@ -14,7 +14,7 @@ public class Rocket : MonoBehaviour {
 	public bool thrusting;
 	public Vector2 currentThrust;
 	public Vector2 combinedGravitation;
-
+	[HideInInspector]public Vector2 rocketLastPosition;
 	public int state;
 	public enum State{
 		preLaunch,
@@ -30,6 +30,7 @@ public class Rocket : MonoBehaviour {
 			thrustMagnitude = 50f;
 		}
 		initialPosition = transform.position;
+		rocketLastPosition = initialPosition;
 		ghostTrail = GetComponent<GhostTrail>();
 		if(ghostTrail != null){
 			ghostTrail.enabled = false;
@@ -93,6 +94,6 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		GameControl.self.totalDistance += (new Vector2(transform.position.x, transform.position.y) - rocketLastPosition).magnitude;
 	}
 }

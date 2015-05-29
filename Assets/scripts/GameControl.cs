@@ -13,6 +13,8 @@ public class GameControl : MonoBehaviour {
 	public float maxOutOfViewportTime;
 	public float outOfViewportTime;
 	public float crashTime;
+	public float totalDistance;
+	
 
 	void Awake(){
 		maxOutOfViewportTime = 3f;
@@ -21,9 +23,11 @@ public class GameControl : MonoBehaviour {
 		Init();
 	}
 	void Init(){
+		mainCamera.transform.position = new Vector3(0,0,-10f);
 		crashTime = 2.0f;
 		prepTime = 5f;
 		outOfViewportTime = 0f;
+		totalDistance = 0f;
 		Time.timeScale = 1.0f;
 	}
 	// Use this for initialization
