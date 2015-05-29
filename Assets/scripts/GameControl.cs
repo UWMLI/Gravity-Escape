@@ -98,6 +98,7 @@ public class GameControl : MonoBehaviour {
 		//Count 5
 		if(rocket.state == (int)Rocket.State.preLaunch){
 			prepTime -= Time.deltaTime;
+			uiControl.UpdateFuel(rocket.fuel);
 			uiControl.UpdateTimer(Mathf.Max(0f,prepTime));
 			if(prepTime <= 0){
 				rocket.state = (int)Rocket.State.flying;
@@ -119,7 +120,9 @@ public class GameControl : MonoBehaviour {
 			//Steer();
 			HandleThrusting();
 			MoveCameraWithRocket();
-			
+			if(rocket.state == (int)Rocket.State.thrusting){
+				uiControl.UpdateFuel(rocket.fuel);
+			}
 		}
 		else if(rocket.state == (int)Rocket.State.crashing){
 			physics.physicsStarted = false;

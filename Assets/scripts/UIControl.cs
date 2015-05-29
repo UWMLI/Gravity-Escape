@@ -8,6 +8,9 @@ public class UIControl : MonoBehaviour {
 	[HideInInspector]public GameObject timerPanel;
 	[HideInInspector]public GameObject levelSelect;
 
+	public void UpdateFuel(float fuelLeft){
+		fuelText.text = fuelLeft.ToString("0");
+	}
 	public void UpdateTimer(float timeLeft){
 		timerText.text = timeLeft.ToString("0");
 	}
@@ -41,7 +44,7 @@ public class UIControl : MonoBehaviour {
 		timerText = timerObj.GetComponent<Text>();
 		fuelText = fuelObj.GetComponent<Text>();
 		Init();
-
+		
 
 		levelSelect = GameObject.Find("Level Select");
 		if(levelSelect != null){
