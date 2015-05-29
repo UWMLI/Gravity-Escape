@@ -45,4 +45,18 @@ public class UIControl : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+	// Level Selects
+	public void LoadLevel1 () {
+		SceneLoader.self.LoadLevel(0);
+	}
+
+	public void LoadLevel2 () {
+		SceneLoader.self.LoadLevel(1);
+	}
+
+	public void LoadLevel3 () {
+		SceneLoader.self.LoadLevel(2);
+	}
 }

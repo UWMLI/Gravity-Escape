@@ -25,6 +25,12 @@ public class SceneLoader : MonoBehaviour {
 			Application.LoadLevel(scenes[currentSceneIdx+1]);
 			currentSceneIdx++;
 		}
-		
+	}
+
+	public void LoadLevel(int levelId){
+		if(!Application.isLoadingLevel && levelId < scenes.Count){
+			Application.LoadLevel(scenes[levelId]);
+			currentSceneIdx = levelId+1;
+		}
 	}
 }
