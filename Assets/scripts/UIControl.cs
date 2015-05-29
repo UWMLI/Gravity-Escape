@@ -8,10 +8,11 @@ public class UIControl : MonoBehaviour {
 	[HideInInspector]public GameObject timerPanel;
 	[HideInInspector]public GameObject levelSelect;
 	[HideInInspector]public GameObject gameStats;
-
+	[HideInInspector]public Text fuelTextInGameStats;
 	//after finishing current level
 	public void ShowGameStats(){
 		gameStats.SetActive(true);
+		fuelTextInGameStats.text = (1000f-GameControl.rocket.fuel).ToString("0");
 	}
 	public void UpdateFuel(float fuelLeft){
 		if(fuelText != null)
@@ -48,6 +49,12 @@ public class UIControl : MonoBehaviour {
 			Debug.Log("no timer panel named 'TimerPanel'!");
 			Application.Quit();
 		}
+		GameObject fuelTextInStat = GameObject.Find();
+		if(fuelTextInStat == null){
+			Debug.Log("no fuel text in stat ");
+			Application.Quit();
+		}
+		fuelTextInStat = fuelTextInStat.GetComponent<Text>();
 		timerText = timerObj.GetComponent<Text>();
 		fuelText = fuelObj.GetComponent<Text>();
 		Init();
