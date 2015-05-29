@@ -9,10 +9,16 @@ public class UIControl : MonoBehaviour {
 	[HideInInspector]public GameObject levelSelect;
 	[HideInInspector]public GameObject gameStats;
 
+	//after finishing current level
+	public void ShowGameStats(){
+		gameStats.SetActive(true);
+	}
 	public void UpdateFuel(float fuelLeft){
+		if(fuelText != null)
 		fuelText.text = fuelLeft.ToString("0");
 	}
 	public void UpdateTimer(float timeLeft){
+		if(timerText != null)
 		timerText.text = timeLeft.ToString("0");
 	}
 	public void HideTimerPanel(){
