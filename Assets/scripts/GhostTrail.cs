@@ -14,8 +14,8 @@ public class GhostTrail : MonoBehaviour {
 	public float last_point_time = 0.0F;
 
 	public Material off_color;
-	public Material on_color;
-
+	public Material thrust_on_color;
+	public Material deThrust_on_color;
 	bool new_segments_allowed = true;
 
     void Start()
@@ -27,7 +27,10 @@ public class GhostTrail : MonoBehaviour {
     void Update()
 	{
 		// Thrust vs Glide
-        if (should_segment_on ()) { current_line = new_line(on_color);  }
+        if (should_thrust_segment_on ()) { current_line = new_line(thrust_on_color); }
+        if (should_deThrust_segment_on()) { current_line = new_line(deThrust_on_color); }
+        
+
         if (should_segment_off()) { current_line = new_line(off_color); }
 
 		track_position();
@@ -36,8 +39,10 @@ public class GhostTrail : MonoBehaviour {
 
 	// On and Off line events
 
-	bool should_segment_on()  { return Input.GetButtonDown("Fire1") && new_segments_allowed; }
-	bool should_segment_off() { return Input.GetButtonUp  ("Fire1") && new_segments_allowed; }
+	bool should_thrust_segment_on()  { return Input.GetButtonDown("Fire1") && new_segments_allowed; }
+	bool should_deThrust_segment_on() { return Input.GetButtonDown("DeThrust") && new_segments_allowed;}
+
+	bool should_segment_off() { return (Input.GetButtonUp ("Fire1") || Input.GetButtonUp("DeThrust")) && new_segments_allowed; }
 
 
 	// Crete line segments
@@ -113,7 +118,10 @@ public class GhostTrail : MonoBehaviour {
 		// Add new one if finger down already
 		if(Input.GetButtonDown("Fire1"))
 		{
-			current_line = new_line(on_color);
+			current_line = new_line(thrust_on_color);
+		}
+		if(Input.GetButtonDown("DeThrust")){
+			current_line = new_line(deThrust_on_color);
 		}
 	}
 }

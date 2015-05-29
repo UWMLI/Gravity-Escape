@@ -28,7 +28,6 @@ public class GameControl : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		uiControl.UpdateTimer(prepTime);
 	}
 	void RocketInViewportTest(){
 		Vector2 rocketInViewport 
@@ -65,11 +64,17 @@ public class GameControl : MonoBehaviour {
 
 	}
 	void HandleThrusting(){
-		if(Input.GetButton("Fire1")){
+		if(Input.GetButton("Fire1") ){
 			rocket.thrusting = true;
 			rocket.state = (int)Rocket.State.thrusting;
 			rocket.ApplyThrust();
-		}else {
+		}
+		else if(Input.GetButton("DeThrust")){
+			rocket.thrusting = true;
+			rocket.state = (int)Rocket.State.thrusting;
+			rocket.ApplyThrust(-1);
+		}
+		else {
 			rocket.state = (int)Rocket.State.flying;
 			rocket.thrusting = false;
 		}
@@ -83,6 +88,13 @@ public class GameControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//scene switch test for unitsTest.scene
+		if(Application.loadedLevelName == "unitsTest"){
+			if(Input.GetKey("space")){
+				SceneLoader.self.LoadNextLevel();
+				return;
+			}
+		}
 		//Count 5
 		if(rocket.state == (int)Rocket.State.preLaunch){
 			prepTime -= Time.deltaTime;

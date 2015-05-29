@@ -52,9 +52,10 @@ public class Rocket : MonoBehaviour {
 		state = (int)State.crashing;
 		ghostTrail.disable_new_segments();
 	}
-	public void ApplyThrust(){
+
+	public void ApplyThrust(int positive = 1){
 		if(thrustMagnitude > 0f){
-			currentThrust = flyingDirection * thrustMagnitude;
+			currentThrust = flyingDirection * Mathf.Sign(positive) * thrustMagnitude;
 			GetComponent<Rigidbody2D>().AddForce(currentThrust);
 			flyingDirection = GetComponent<Rigidbody2D>().velocity;
 			flyingDirection.Normalize();

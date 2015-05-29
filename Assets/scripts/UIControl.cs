@@ -11,7 +11,7 @@ public class UIControl : MonoBehaviour {
 		timerText.text = timeLeft.ToString("0");
 	}
 	public void HideTimerPanel(){
-		
+
 		timerPanel.SetActive(false);
 	}
 	public void Init(){
