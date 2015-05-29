@@ -30,7 +30,10 @@ public class LandingPlanet : Star {
 				collision.gameObject.GetComponent<Rocket>().Crash();
 			}else{
 				//load next level
-				SceneLoader.self.LoadNextLevel();
+				//SceneLoader.self.LoadNextLevel();
+				Time.timeScale = 0f;
+				GameControl.physics.physicsStarted = false;
+				GameControl.uiControl.ShowGameStats();
 			}
 		}
 	}
