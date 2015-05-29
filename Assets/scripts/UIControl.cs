@@ -6,6 +6,7 @@ public class UIControl : MonoBehaviour {
 	[HideInInspector]public Text timerText;
 	[HideInInspector]public Text fuelText;
 	[HideInInspector]public GameObject timerPanel;
+	[HideInInspector]public GameObject levelSelect;
 
 	public void UpdateTimer(float timeLeft){
 		timerText.text = timeLeft.ToString("0");
@@ -40,24 +41,16 @@ public class UIControl : MonoBehaviour {
 		timerText = timerObj.GetComponent<Text>();
 		fuelText = fuelObj.GetComponent<Text>();
 		Init();
+
+
+		levelSelect = GameObject.Find("Level Select");
+		if(levelSelect != null){
+			levelSelect.SetActive(false);
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
 	
-	}
-
-
-	// Level Selects
-	public void LoadLevel1 () {
-		SceneLoader.self.LoadLevel(0);
-	}
-
-	public void LoadLevel2 () {
-		SceneLoader.self.LoadLevel(1);
-	}
-
-	public void LoadLevel3 () {
-		SceneLoader.self.LoadLevel(2);
 	}
 }
