@@ -7,6 +7,7 @@ public class UIControl : MonoBehaviour {
 	[HideInInspector]public Text fuelText;
 	[HideInInspector]public GameObject timerPanel;
 	[HideInInspector]public GameObject levelSelect;
+	[HideInInspector]public GameObject gameStats;
 
 	public void UpdateFuel(float fuelLeft){
 		fuelText.text = fuelLeft.ToString("0");
@@ -49,6 +50,10 @@ public class UIControl : MonoBehaviour {
 		levelSelect = GameObject.Find("Level Select");
 		if(levelSelect != null){
 			levelSelect.SetActive(false);
+		}
+		gameStats = GameObject.Find("Game Stats");
+		if(gameStats != null){
+			gameStats.SetActive(false);
 		}
 	}
 
