@@ -80,15 +80,7 @@ public class GameControl : MonoBehaviour {
 		newCameraPosition.z = -10f;
 		mainCamera.transform.position = newCameraPosition;
 	}
-	void Steer(){
-		//right: clockwise
-		//left: counterclockwise
-		float steer = Input.GetAxis("Horizontal");
-		float rotation = -steer * /*Mathf.Rad2Deg **/ 10f * Time.deltaTime;
-		rocket.transform.Rotate(0,0,rotation);
-
-		//Debug.Log("steer rotation: " + rotation);
-	}
+	
 	// Update is called once per frame
 	void Update () {
 		//Count 5
@@ -110,18 +102,7 @@ public class GameControl : MonoBehaviour {
 		else if(rocket.state == (int)Rocket.State.flying
 			|| rocket.state == (int)Rocket.State.thrusting){
 			//if rocket is out of sight for more than 3 seconds
-			//game over
-			/*
-			RocketInViewportTest();
 
-			if(outOfViewportTime >= maxOutOfViewportTime){
-				OnGameOver();
-			}else{
-				HandleThrusting();
-			}
-			//update: camera moves with rocket
-			//rocket is always at the center of the screen
-			*/
 			RocketInViewportTest();
 			//Steer();
 			HandleThrusting();

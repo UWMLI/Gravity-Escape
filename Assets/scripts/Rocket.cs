@@ -8,6 +8,7 @@ public class Rocket : MonoBehaviour {
 	public float fuel;
 	public float initialVelocityAngle; //assign in inspector
 	public float initialVelocityMagnitude; // >= 0
+	public float initialVelocityAppliedTime;
 
 	public Vector2 flyingDirection;
 	public bool thrusting;
@@ -66,6 +67,16 @@ public class Rocket : MonoBehaviour {
 		if(initialVelocityMagnitude == 0)return;
 		transform.Rotate(0,0,initialVelocityAngle);
 		GetComponent<Rigidbody2D>().velocity = transform.up.normalized * initialVelocityMagnitude;
+		initialVelocityAppliedTime -= Time.deltaTime;
+	}
+	//called in physics engine
+	public void ContinueApplyingInitialVelocity(){
+		if(initialVelocityMagnitude == 0)return;
+		Vector2 currentVelocity = GetComponent<Rigidbody2D>().velocity;
+		GetComponent<Rigidbody2D>().velocity 
+			= new Vector3(currentVelocity.x, currentVelocity.y)
+			 + transform.up.normalized * initialVelocityMagnitude;
+		initialVelocityAppliedTime -= Time.fixedDeltaTime;
 	}
 	// Use this for initialization
 	void Start () {

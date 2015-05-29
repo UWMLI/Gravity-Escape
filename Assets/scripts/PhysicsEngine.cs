@@ -32,7 +32,9 @@ public class PhysicsEngine : MonoBehaviour {
 		}
 		//rotation always perpendicular to combined force
 		Vector2 combinedForceDir = rocket.combinedGravitation + rocket.currentThrust;
-		
+		if(rocket.initialVelocityAppliedTime >= 0){
+			rocket.ContinueApplyingInitialVelocity();
+		}
 		Vector2 vel = rocket.GetComponent<Rigidbody2D>().velocity;
 		rocket.transform.up = vel.normalized;
 		//float angle = Mathf.Rad2Deg * Mathf.Atan2(vel.y,vel.x);
