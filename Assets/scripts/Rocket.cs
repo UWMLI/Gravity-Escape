@@ -9,7 +9,7 @@ public class Rocket : MonoBehaviour {
 	public float initialVelocityAngle; //assign in inspector
 	public float initialVelocityMagnitude; // >= 0
 	public float initialVelocityAppliedTime;
-
+	[HideInInspector]public float initialVelocityTimeLeft;
 	public Vector2 flyingDirection;
 	public bool thrusting;
 	public Vector2 currentThrust;
@@ -27,7 +27,7 @@ public class Rocket : MonoBehaviour {
 	void Awake(){
 		GameControl.rocket = this;
 		if(thrustMagnitude <= 0f){
-			thrustMagnitude = 10f;
+			thrustMagnitude = 50f;
 		}
 		initialPosition = transform.position;
 		ghostTrail = GetComponent<GhostTrail>();
@@ -39,6 +39,7 @@ public class Rocket : MonoBehaviour {
 	}
 	public void Init(){
 		fuel = 1000f;
+		initialVelocityTimeLeft = initialVelocityAppliedTime;
 		state = (int)State.preLaunch;
 		flyingDirection = Vector2.up;
 		currentThrust = Vector2.zero;
@@ -50,6 +51,7 @@ public class Rocket : MonoBehaviour {
 	}
 	public void Crash(){
 		state = (int)State.crashing;
+		GameControl.rocket.state = (int)State.crashing;
 		ghostTrail.disable_new_segments();
 	}
 
@@ -68,16 +70,18 @@ public class Rocket : MonoBehaviour {
 		if(initialVelocityMagnitude == 0)return;
 		transform.Rotate(0,0,initialVelocityAngle);
 		GetComponent<Rigidbody2D>().velocity = transform.up.normalized * initialVelocityMagnitude;
-		initialVelocityAppliedTime -= Time.deltaTime;
+		initialVelocityTimeLeft -= Time.deltaTime;
 	}
 	//called in physics engine
 	public void ContinueApplyingInitialVelocity(){
+		
 		if(initialVelocityMagnitude == 0)return;
 		Vector2 currentVelocity = GetComponent<Rigidbody2D>().velocity;
 		GetComponent<Rigidbody2D>().velocity 
 			= new Vector3(currentVelocity.x, currentVelocity.y)
 			 + transform.up.normalized * initialVelocityMagnitude;
-		initialVelocityAppliedTime -= Time.fixedDeltaTime;
+		initialVelocityTimeLeft -= Time.fixedDeltaTime;
+
 	}
 	// Use this for initialization
 	void Start () {

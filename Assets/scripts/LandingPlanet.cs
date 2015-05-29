@@ -5,8 +5,15 @@ public class LandingPlanet : Star {
 	public override void Awake(){
 		base.Awake();
 	}
-	public override void OnCollisionEnter2D(Collision2D collision){
-		if(collision.gameObject.tag == "Rocket"){
+	void OnCollisionEnter2D(Collision2D collision){
+		Debug.Log(GameControl.rocket.state);
+		if(GameControl.rocket.state == (int)Rocket.State.crashing){
+			Debug.Log("already crashed");
+			return;
+		}
+		if(gameObject.tag == "LandingPlanet" && collision.gameObject.tag == "Rocket"){
+			
+			
 			//check if mv is too large
 			if(collision.contacts == null || collision.contacts.Length == 0){
 				Debug.Log("Error: no contacts!!!");
