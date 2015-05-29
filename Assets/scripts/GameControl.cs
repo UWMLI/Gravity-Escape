@@ -33,8 +33,7 @@ public class GameControl : MonoBehaviour {
 	void RocketInViewportTest(){
 		Vector2 rocketInViewport 
 			= mainCamera.WorldToViewportPoint(rocket.transform.position);
-		if(rocketInViewport.x < 0f || rocketInViewport.x > 1f 
-			|| rocketInViewport.y < 0f || rocketInViewport.y > 1f){
+		if(rocketInViewport.y < 0f || rocketInViewport.y > 1f){
 			//start counting 3 seconds
 			outOfViewportTime += Time.deltaTime;
 		}else{
@@ -84,11 +83,6 @@ public class GameControl : MonoBehaviour {
 	void Steer(){
 		//right: clockwise
 		//left: counterclockwise
-		Vector2 vel = rocket.GetComponent<Rigidbody2D>().velocity;
-		float angle = Mathf.Rad2Deg * Mathf.Atan2(vel.y,vel.x);
-		//float angle = Mathf.Rad2Deg * Mathf.Atan2(combinedForceDir.y,combinedForceDir.x);
-		//rocket.transform.eulerAngles = new Vector3(0,0, angle);
-	
 		float steer = Input.GetAxis("Horizontal");
 		float rotation = -steer * /*Mathf.Rad2Deg **/ 10f * Time.deltaTime;
 		rocket.transform.Rotate(0,0,rotation);
@@ -109,6 +103,7 @@ public class GameControl : MonoBehaviour {
 				rocket.ghostTrail.enabled = true;
 				//start physics
 				physics.physicsStarted = true;
+				rocket.GetComponent<Rigidbody2D>().velocity = Vector2.up * 1.5f;
 			}
 		}
 		else if(rocket.state == (int)Rocket.State.flying
@@ -126,7 +121,8 @@ public class GameControl : MonoBehaviour {
 			//update: camera moves with rocket
 			//rocket is always at the center of the screen
 			*/
-			Steer();
+			RocketInViewportTest();
+			//Steer();
 			HandleThrusting();
 			MoveCameraWithRocket();
 			

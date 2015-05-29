@@ -19,7 +19,7 @@ public class Star : MonoBehaviour {
 		);
 		Vector2 dir = transform.position - GameControl.rocket.transform.position;
 		dir.Normalize();
-		return dir * gravityConst * mass * (GameControl.rocket.mass) / (dist * dist);
+		return dir * gravityConst * mass * (GameControl.rocket.mass) / (Mathf.Pow(10f,2f) *dist * dist);
 	}
 	public virtual void OnCollisionEnter2D(Collision2D collision){
 		if(collision.gameObject.tag == "Rocket"){
