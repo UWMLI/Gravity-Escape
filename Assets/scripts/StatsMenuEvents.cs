@@ -13,11 +13,6 @@ public class StatsMenuEvents : MonoBehaviour {
 	
 	}
 
-	public void showLevelSelect()
-	{
-
-	}
-
 	public void nextLevel()
 	{
 		SceneLoader.self.LoadNextLevel();
